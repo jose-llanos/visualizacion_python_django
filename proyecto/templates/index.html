@@ -1,0 +1,94 @@
+<html>
+<head>
+    <title>.:: Ejemplo de Dashboard con Python y Django ::.</title>
+</head>
+<body>
+    <form action="/dashboard/" method="post">
+        {% csrf_token %}
+        <h3>Ejemplo de Dashboard</h3>
+        
+        <p>&nbsp;</p>
+        <button type="submit">Generar Gráfica</button>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+
+    </form>
+
+     <!-- Gráfica highcharts-->
+     <div class="row">
+        <p>&nbsp;</p>
+        <div class="col-md-12">
+        <div class="main-card mb-3 card">
+
+            <script src="https://code.highcharts.com/highcharts.js"></script>
+            <script src="https://code.highcharts.com/modules/series-label.js"></script>
+            <script src="https://code.highcharts.com/modules/exporting.js"></script>
+            <script src="https://code.highcharts.com/modules/export-data.js"></script>
+            <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+            <figure class="highcharts-figure">
+                <div id="container">
+
+                </div>
+            </figure>
+
+            <script type="text/javascript">
+
+                Highcharts.chart('container', {
+
+                title: {
+                    text: 'Gráfica de X VS Y'
+                },
+
+                subtitle: {
+                    text: 'Origen de los datos: ...'
+                },
+
+                yAxis: {
+                    title: {
+                        text: 'Y'
+                    }
+                },
+
+                xAxis: {
+                    title: {
+                        text: 'X'
+                    },
+                    categories: [2, 4, 6, 8, 10]
+                },
+
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle'
+                },
+
+                series: [{
+                    name: 'Valores',
+                    data: {{y|safe}}
+                }],
+
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                layout: 'horizontal',
+                                align: 'center',
+                                verticalAlign: 'bottom'
+                            }
+                        }
+                    }]
+                }
+
+                });
+            </script>
+            </div>
+        </div>
+    </div>
+    <!-- Fin gráfica highcharts-->
+    
+</body>
+</html>
