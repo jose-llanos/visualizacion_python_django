@@ -15,15 +15,15 @@ python3 -m pip install Django==5.2.4
 
 #### Windows:
 
-pip3 install Django==5.2.4
+pip install Django==5.2.4
 
 ## Paso 2: Verificar la versión del Django
 
-python3 -m django --version
+python -m django --version
 
 ## Paso 3: Listalar las librerias a utilizar
 
-pip3 install numpy pandas matplotlib
+pip install numpy pandas matplotlib
 
 ## Paso 4: Correr la aplicación para verificar que Django está en funcionamiento
 
@@ -57,4 +57,4 @@ django-admin startproject nombre_proyecto
 
 ## Paso 3.2: Crear migraciones en Django
 
-python3 manage.py migrate
+python manage.py migrate
