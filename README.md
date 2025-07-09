@@ -27,7 +27,7 @@ pip install numpy pandas matplotlib
 
 ## Paso 4: Correr la aplicación para verificar que Django está en funcionamiento
 
-nombre_proyecto$ python3 manage.py runserver
+nombre_proyecto$ python manage.py runserver
 
 ## Paso 5: Clone la plantilla de Django dentro de la carpeta del proyecto
 
@@ -43,7 +43,7 @@ Este es el Dashboard, aquí se toman los datos enviados por el Python y se muest
 
 ## Paso 8: Ejecute la aplicación en el navegador para visualizar el dashboard
 
-nombre_proyecto$ python3 manage.py runserver
+nombre_proyecto$ python manage.py runserver
 
 Y al final el Django genera una URL para la visualización de la aplicación
 
