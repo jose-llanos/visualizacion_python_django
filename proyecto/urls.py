@@ -16,11 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from proyecto.views import main
-from proyecto.views import dashboard
+from proyecto.views import grafica1
+from proyecto.views import grafica2
+from proyecto.views import grafica3
 
 urlpatterns = [
     #path('admin/', admin.site.urls),
 
     path('main/', main, name='main'), # Directa
-    path('dashboard/', dashboard),    # Dashboard
+    path('grafica1/', grafica1),      # Grafica1
+    path('grafica2/', grafica2),      # Grafica2
+    path('grafica3/', grafica3),      # Grafica2
 ]

@@ -2,93 +2,224 @@
 <head>
     <title>.:: Ejemplo de Dashboard con Python y Django ::.</title>
 </head>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
 <body>
-    <form action="/dashboard/" method="post">
+    <form action="/grafica1/" method="post">
         {% csrf_token %}
-        <h3>Ejemplo de Dashboard</h3>
+        <h3>Ejemplo de Gráfica 1</h3>
         
         <p>&nbsp;</p>
-        <button type="submit">Generar Gráfica</button>
-        <p>&nbsp;</p>
+        <button type="submit">Generar Gráfica1</button>
         <p>&nbsp;</p>
 
+        <!-- Gráfica1-->
+        <figure class="highcharts-figure">
+            <div id="grafica1"></div>
+        </figure>
+        <!-- Fin gráfica1-->
     </form>
 
-     <!-- Gráfica highcharts-->
-     <div class="row">
+    <form action="/grafica2/" method="post">
+        {% csrf_token %}
+        <h3>Ejemplo de Gráfica 2</h3>
+        
         <p>&nbsp;</p>
-        <div class="col-md-12">
-        <div class="main-card mb-3 card">
+        <button type="submit">Generar Gráfica2</button>
+        <p>&nbsp;</p>
 
-            <script src="https://code.highcharts.com/highcharts.js"></script>
-            <script src="https://code.highcharts.com/modules/series-label.js"></script>
-            <script src="https://code.highcharts.com/modules/exporting.js"></script>
-            <script src="https://code.highcharts.com/modules/export-data.js"></script>
-            <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+        <!-- Gráfica2-->
+        <figure class="highcharts-figure">
+            <div id="grafica2"></div>
+        </figure>
+        <!-- Fin gráfica2-->
+    </form>
 
-            <figure class="highcharts-figure">
-                <div id="container">
+    <form action="/grafica3/" method="post">
+        {% csrf_token %}
+        <h3>Ejemplo de Gráfica 3</h3>
+        
+        <p>&nbsp;</p>
+        <button type="submit">Generar Gráfica3</button>
+        <p>&nbsp;</p>
 
-                </div>
-            </figure>
-
-            <script type="text/javascript">
-
-                Highcharts.chart('container', {
-
-                title: {
-                    text: 'Gráfica de X VS Y'
-                },
-
-                subtitle: {
-                    text: 'Origen de los datos: ...'
-                },
-
-                yAxis: {
-                    title: {
-                        text: 'Y'
-                    }
-                },
-
-                xAxis: {
-                    title: {
-                        text: 'X'
-                    },
-                    categories: [2, 4, 6, 8, 10]
-                },
-
-                legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'middle'
-                },
-
-                series: [{
-                    name: 'Valores',
-                    data: {{y|safe}}
-                }],
-
-                responsive: {
-                    rules: [{
-                        condition: {
-                            maxWidth: 500
-                        },
-                        chartOptions: {
-                            legend: {
-                                layout: 'horizontal',
-                                align: 'center',
-                                verticalAlign: 'bottom'
-                            }
-                        }
-                    }]
-                }
-
-                });
-            </script>
-            </div>
-        </div>
-    </div>
-    <!-- Fin gráfica highcharts-->
-    
+        <!-- Gráfica3-->
+        <figure class="highcharts-figure">
+            <div id="grafica3"></div>
+        </figure>
+        <!-- Fin gráfica3-->
+    </form>
 </body>
 </html>
+
+<!-- Gráfica 1-->
+<script type="text/javascript">
+
+Highcharts.chart('grafica1', {
+
+title: {
+    text: 'Gráfica de X VS Y'
+},
+
+subtitle: {
+    text: 'Origen de los datos: ...'
+},
+
+yAxis: {
+    title: {
+        text: 'Y'
+    }
+},
+
+xAxis: {
+    title: {
+        text: 'X'
+    },
+    categories: [2, 4, 6, 8, 10]
+},
+
+legend: {
+    layout: 'vertical',
+    align: 'right',
+    verticalAlign: 'middle'
+},
+
+series: [{
+    name: 'Valores',
+    data: {{y|safe}}
+}],
+
+responsive: {
+    rules: [{
+        condition: {
+            maxWidth: 500
+        },
+        chartOptions: {
+            legend: {
+                layout: 'horizontal',
+                align: 'center',
+                verticalAlign: 'bottom'
+            }
+        }
+    }]
+}
+
+});
+</script>
+<!-- Fin gráfica 1-->
+
+<!-- Gráfica2-->
+<script type="text/javascript">
+Highcharts.chart('grafica2', {
+chart: {
+    type: 'pie',
+    zooming: {
+        type: 'xy'
+    },
+    panning: {
+        enabled: true,
+        type: 'xy'
+    },
+    panKey: 'shift'
+},
+title: {
+    text: 'Venta de frutas por mes'
+},
+xAxis: {
+        categories: {{ frutas|safe }}
+    },
+tooltip: {
+    valueSuffix: '%'
+},
+subtitle: {
+    text:
+    'Datos....'
+},
+plotOptions: {
+    pie: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: [{
+            enabled: true,
+            distance: 20
+        }, {
+            enabled: true,
+            distance: -40,
+            format: '{point.percentage:.1f}%',
+            style: {
+                fontSize: '1.2em',
+                textOutline: 'none',
+                opacity: 0.7
+            },
+            filter: {
+                operator: '>',
+                property: 'percentage',
+                value: 10
+            }
+        }]
+    }
+},
+series: [{
+    name: 'Porcentaje',
+    colorByPoint: true,
+    data: {{ porcentajes|safe }}
+}]
+});
+</script>
+<!-- Fin Gráfica2-->
+
+
+<!-- Gráfica 3-->
+<script type="text/javascript">
+Highcharts.chart('grafica3', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Producción 2023'
+    },
+    subtitle: {
+        text:
+            'Source: <a target="_blank" ' +
+            'href="https://www.indexmundi.com/agriculture/?commodity=corn">indexmundi</a>'
+    },
+    xAxis: {
+        categories: {{ categorias|safe }},
+        crosshair: true,
+        accessibility: {
+            description: 'Paises'
+        }
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Producción'
+        }
+    },
+    tooltip: {
+        valueSuffix: 'Producción'
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [
+        {
+            name: 'Paises',
+            data: {{ valores_2023|safe }}
+        },
+        {
+            name: 'Letras',
+            data: {{ valores_2024|safe }}
+        }
+    ]
+});
+
+</script>
+<!-- Fin Gráfica3-->
