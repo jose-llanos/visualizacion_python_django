@@ -15,19 +15,19 @@ python3 -m pip install Django==5.2.4
 
 #### Windows:
 
-pip3 install Django==5.2.4
+pip install Django==5.2.4
 
 ## Paso 2: Verificar la versión del Django
 
-python3 -m django --version
+python -m django --version
 
 ## Paso 3: Listalar las librerias a utilizar
 
-pip3 install numpy pandas matplotlib
+pip install numpy pandas matplotlib
 
 ## Paso 4: Correr la aplicación para verificar que Django está en funcionamiento
 
-nombre_proyecto$ python3 manage.py runserver
+nombre_proyecto$ python manage.py runserver
 
 ## Paso 5: Clone la plantilla de Django dentro de la carpeta del proyecto
 
@@ -43,7 +43,7 @@ Este es el Dashboard, aquí se toman los datos enviados por el Python y se muest
 
 ## Paso 8: Ejecute la aplicación en el navegador para visualizar el dashboard
 
-nombre_proyecto$ python3 manage.py runserver
+nombre_proyecto$ python manage.py runserver
 
 Y al final el Django genera una URL para la visualización de la aplicación
 
@@ -57,4 +57,4 @@ django-admin startproject nombre_proyecto
 
 ## Paso 3.2: Crear migraciones en Django
 
-python3 manage.py migrate
+python manage.py migrate
