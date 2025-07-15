@@ -53,6 +53,21 @@
         </figure>
         <!-- Fin gráfica3-->
     </form>
+
+    <form action="/grafica4/" method="post">
+        {% csrf_token %}
+        <h3>Ejemplo de Gráfica 4</h3>
+        
+        <p>&nbsp;</p>
+        <button type="submit">Generar Gráfica4</button>
+        <p>&nbsp;</p>
+
+        <!-- Gráfica4-->
+        <figure class="highcharts-figure">
+            <div id="grafica4"></div>
+        </figure>
+        <!-- Fin gráfica4-->
+    </form>
 </body>
 </html>
 
@@ -211,11 +226,11 @@ Highcharts.chart('grafica3', {
     },
     series: [
         {
-            name: 'Paises',
+            name: '2023',
             data: {{ valores_2023|safe }}
         },
         {
-            name: 'Letras',
+            name: '2024',
             data: {{ valores_2024|safe }}
         }
     ]
@@ -223,3 +238,54 @@ Highcharts.chart('grafica3', {
 
 </script>
 <!-- Fin Gráfica3-->
+
+<!-- Gráfica 4-->
+<script type="text/javascript">
+
+Highcharts.chart('grafica4', {
+
+    title: {
+        text: 'U.S Solar Employment Growth',
+        align: 'left'
+    },
+
+    subtitle: {
+        text: 'By Job Category. Source: <a href="https://irecusa.org/programs/solar-jobs-census/" target="_blank">IREC</a>.',
+        align: 'left'
+    },
+
+    yAxis: {
+        title: {
+            text: 'Number of Employees'
+        }
+    },
+
+    xAxis: {
+        categories: {{ categorias2|safe }}
+    },
+    
+    series: [{
+        name: 'Installation & Developers',
+        data: {{prueba|safe}}
+    }],
+
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 500
+            },
+            chartOptions: {
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                }
+            }
+        }]
+    }
+
+});
+
+
+</script>
+<!-- Fin Gráfica4-->

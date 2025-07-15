@@ -19,6 +19,7 @@ from proyecto.views import main
 from proyecto.views import grafica1
 from proyecto.views import grafica2
 from proyecto.views import grafica3
+from proyecto.views import grafica4
 
 urlpatterns = [
     #path('admin/', admin.site.urls),
@@ -27,4 +28,5 @@ urlpatterns = [
     path('grafica1/', grafica1),      # Grafica1
     path('grafica2/', grafica2),      # Grafica2
     path('grafica3/', grafica3),      # Grafica2
+    path('grafica4/', grafica4),      # Grafica4
 ]

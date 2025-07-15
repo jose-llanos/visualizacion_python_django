@@ -8,16 +8,25 @@ import numpy as np
 # Libreria para el manejo de datos
 import pandas as pd
 
+# Libreria para la conexión de PostgreSQL
+from proyecto.connection import connection_postgresql
+
 # -----------------------------------
 
 def main(request):
     # *** Plantilla ***
     return render(request, 'index.html', context={})
 
-
 def grafica1(request):
-    # Datos gráfica 1
-    datos_y =  [5, 10, 15, 20, 25]
+    # Se genera la conexión con la base de datos
+    cursor = connection_postgresql()
+
+    # Se consultan los registros para las gráficas
+    cursor.execute(""" select total from compras """)
+    record = cursor.fetchall()
+
+    # Conversión y limpieza
+    datos_y = [float(item[0]) for item in record][:-1]
 
     # Se envian los valores de Y al contexto para renderizar
     context = {"y": datos_y}
@@ -29,7 +38,7 @@ def grafica1(request):
 def grafica2(request):
     # Datos gráfica 2
     datos_frutas = ['Manzana', 'Peras', 'Bananos', 'Fresas', 'Uvas']
-    datos_porcentajes = [20.0, 20.0, 20.0, 20.0, 20.0]
+    datos_porcentajes = [30.0, 20.0, 10.0, 25.0, 15.0]
 
     # Se envian los valores al contexto para renderizar
     context = {
@@ -56,3 +65,26 @@ def grafica3(request):
     
     # *** Plantilla ***
     return render(request, 'index.html', context=context)
+
+def grafica4(request):
+    # Se genera la conexión con la base de datos
+    cursor = connection_postgresql()
+
+    # Se consultan los registros para las gráficas
+    cursor.execute(""" select ciudad, id_ciudad from ciudades """)
+    record = cursor.fetchall()
+
+    print(record)
+
+    # Conversión y limpieza
+    categorias = [item[0] for item in record][:-1]
+    datos1 = [float(item[1]) for item in record][:-1]
+    
+    # Contexto: Datos que vamos a pasar al template (index.html)
+    context = {
+               "categorias2": categorias,
+               "prueba": datos1
+               }
+
+    # *** Plantilla ***
+    return render(request, 'index.html', context=context)    
