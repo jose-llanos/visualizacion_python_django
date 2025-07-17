@@ -26,7 +26,7 @@ def grafica1(request):
     record = cursor.fetchall()
 
     # Conversión y limpieza
-    datos_y = [float(item[0]) for item in record][:-1]
+    datos_y = [float(item[0]) for item in record]
 
     # Se envian los valores de Y al contexto para renderizar
     context = {"y": datos_y}
@@ -74,11 +74,9 @@ def grafica4(request):
     cursor.execute(""" select ciudad, id_ciudad from ciudades """)
     record = cursor.fetchall()
 
-    print(record)
-
     # Conversión y limpieza
-    categorias = [item[0] for item in record][:-1]
-    datos1 = [float(item[1]) for item in record][:-1]
+    categorias = [item[0] for item in record]
+    datos1 = [float(item[1]) for item in record]
     
     # Contexto: Datos que vamos a pasar al template (index.html)
     context = {

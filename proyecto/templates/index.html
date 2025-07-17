@@ -1,291 +1,298 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>.:: Ejemplo de Dashboard con Python y Django ::.</title>
+    <meta charset="UTF-8">
+    <title>Dashboard Django + Postgresql</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: #f4f8fb; }
+        .sidebar { min-height: 100vh; background: #232e3c; color: #fff; }
+        .sidebar .nav-link { color: #bfc9d4; }
+        .sidebar .nav-link.active, .sidebar .nav-link:hover { background: #1a2230; color: #fff; }
+        .dashboard-header { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+        .card-metric { border-radius: 12px; background: #fff; padding: 18px 24px; margin-bottom: 18px; }
+        .highcharts-figure { background: #fff; border-radius: 12px; padding: 18px; margin-bottom: 18px; }
+    </style>
+    <!-- Highcharts -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 </head>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/series-label.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
-
 <body>
-    <form action="/grafica1/" method="post">
-        {% csrf_token %}
-        <h3>Ejemplo de Gráfica 1</h3>
-        
-        <p>&nbsp;</p>
-        <button type="submit">Generar Gráfica1</button>
-        <p>&nbsp;</p>
-
-        <!-- Gráfica1-->
-        <figure class="highcharts-figure">
-            <div id="grafica1"></div>
-        </figure>
-        <!-- Fin gráfica1-->
-    </form>
-
-    <form action="/grafica2/" method="post">
-        {% csrf_token %}
-        <h3>Ejemplo de Gráfica 2</h3>
-        
-        <p>&nbsp;</p>
-        <button type="submit">Generar Gráfica2</button>
-        <p>&nbsp;</p>
-
-        <!-- Gráfica2-->
-        <figure class="highcharts-figure">
-            <div id="grafica2"></div>
-        </figure>
-        <!-- Fin gráfica2-->
-    </form>
-
-    <form action="/grafica3/" method="post">
-        {% csrf_token %}
-        <h3>Ejemplo de Gráfica 3</h3>
-        
-        <p>&nbsp;</p>
-        <button type="submit">Generar Gráfica3</button>
-        <p>&nbsp;</p>
-
-        <!-- Gráfica3-->
-        <figure class="highcharts-figure">
-            <div id="grafica3"></div>
-        </figure>
-        <!-- Fin gráfica3-->
-    </form>
-
-    <form action="/grafica4/" method="post">
-        {% csrf_token %}
-        <h3>Ejemplo de Gráfica 4</h3>
-        
-        <p>&nbsp;</p>
-        <button type="submit">Generar Gráfica4</button>
-        <p>&nbsp;</p>
-
-        <!-- Gráfica4-->
-        <figure class="highcharts-figure">
-            <div id="grafica4"></div>
-        </figure>
-        <!-- Fin gráfica4-->
-    </form>
-</body>
-</html>
-
-<!-- Gráfica 1-->
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-2 d-none d-md-block sidebar py-4">
+            <div class="text-center mb-4">
+                <h3>Dashboard</h3>
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                    <a class="nav-link active" href="#">Dashboards</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link" href="#">Calendario</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link" href="#">Tablas</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link" href="#">Gráficas</a>
+                </li>
+            </ul>
+        </nav>
+        <!-- Main Content -->
+        <main class="col-md-10 ms-sm-auto px-md-4 py-4">
+            <div class="dashboard-header d-flex justify-content-between align-items-center">
+                <h2>Dashboard</h2>
+                <div>
+                    <img src="https://placehold.co/40x40" class="rounded-circle" alt="User">
+                </div>
+            </div>
+            <!-- Métricas (puedes personalizar o eliminar si no las necesitas) -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card-metric">
+                        <div class="fw-bold fs-4">1,587</div>
+                        <div>PEDIDOS</div>
+                        <small class="text-success">↑ 15% Del periodo anterior</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card-metric">
+                        <div class="fw-bold fs-4">$46,782</div>
+                        <div>INGRESOS</div>
+                        <small class="text-danger">↓ 8% Del periodo anterior</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card-metric">
+                        <div class="fw-bold fs-4">$15.9</div>
+                        <div>PRECIO PROMEDIO</div>
+                        <small class="text-warning">0% Del periodo anterior</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card-metric">
+                        <div class="fw-bold fs-4">1,890</div>
+                        <div>PRODUCTO VENDIDO</div>
+                        <small class="text-success">↑ 40% El año pasado</small>
+                    </div>
+                </div>
+            </div>
+            <!-- Gráficas del archivo index.html -->
+            <div class="row">
+                <div class="col-md-6">
+                    <figure class="highcharts-figure">
+                        <div id="grafica1"></div>
+                    </figure>
+                </div>
+                <div class="col-md-6">
+                    <figure class="highcharts-figure">
+                        <div id="grafica2"></div>
+                    </figure>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <figure class="highcharts-figure">
+                        <div id="grafica3"></div>
+                    </figure>
+                </div>
+                <div class="col-md-6">
+                    <figure class="highcharts-figure">
+                        <div id="grafica4"></div>
+                    </figure>
+                </div>
+            </div>
+            <!-- Tablas de datos ficticios debajo de las gráficas -->
+            <div class="container mt-4">
+            <div class="row">
+                <div class="col-md-6">
+                <h4>Ventas por Producto</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                    <thead class="table-light">
+                        <tr>
+                        <th>Producto</th>
+                        <th>Categoría</th>
+                        <th>Cantidad Vendida</th>
+                        <th>Precio Unitario</th>
+                        <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <td>Manzanas</td>
+                        <td>Frutas</td>
+                        <td>120</td>
+                        <td>$1.50</td>
+                        <td>$180.00</td>
+                        </tr>
+                        <tr>
+                        <td>Peras</td>
+                        <td>Frutas</td>
+                        <td>80</td>
+                        <td>$1.80</td>
+                        <td>$144.00</td>
+                        </tr>
+                        <tr>
+                        <td>Plátanos</td>
+                        <td>Frutas</td>
+                        <td>150</td>
+                        <td>$1.20</td>
+                        <td>$180.00</td>
+                        </tr>
+                        <tr>
+                        <td>Uvas</td>
+                        <td>Frutas</td>
+                        <td>60</td>
+                        <td>$2.00</td>
+                        <td>$120.00</td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+                </div>
+                <div class="col-md-6">
+                <h4>Resumen de Clientes</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                    <thead class="table-light">
+                        <tr>
+                        <th>Cliente</th>
+                        <th>Ciudad</th>
+                        <th>Correo Electrónico</th>
+                        <th>Compras Realizadas</th>
+                        <th>Total Gastado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <td>Ana Gómez</td>
+                        <td>Bogotá</td>
+                        <td>ana.gomez@email.com</td>
+                        <td>5</td>
+                        <td>$320.00</td>
+                        </tr>
+                        <tr>
+                        <td>Carlos Pérez</td>
+                        <td>Medellín</td>
+                        <td>carlos.perez@email.com</td>
+                        <td>3</td>
+                        <td>$210.00</td>
+                        </tr>
+                        <tr>
+                        <td>Lucía Torres</td>
+                        <td>Cali</td>
+                        <td>lucia.torres@email.com</td>
+                        <td>4</td>
+                        <td>$275.00</td>
+                        </tr>
+                        <tr>
+                        <td>Juan Rodríguez</td>
+                        <td>Barranquilla</td>
+                        <td>juan.rodriguez@email.com</td>
+                        <td>2</td>
+                        <td>$150.00</td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
+            </div>
+        </main>
+    </div>
+</div>
+<!-- Scripts de las gráficas (con datos de ejemplo para visualización) -->
 <script type="text/javascript">
-
+// Gráfica 1
 Highcharts.chart('grafica1', {
-
-title: {
-    text: 'Gráfica de X VS Y'
-},
-
-subtitle: {
-    text: 'Origen de los datos: ...'
-},
-
-yAxis: {
-    title: {
-        text: 'Y'
-    }
-},
-
-xAxis: {
-    title: {
-        text: 'X'
-    },
-    categories: [2, 4, 6, 8, 10]
-},
-
-legend: {
-    layout: 'vertical',
-    align: 'right',
-    verticalAlign: 'middle'
-},
-
-series: [{
-    name: 'Valores',
-    data: {{y|safe}}
-}],
-
-responsive: {
-    rules: [{
-        condition: {
-            maxWidth: 500
-        },
-        chartOptions: {
-            legend: {
-                layout: 'horizontal',
-                align: 'center',
-                verticalAlign: 'bottom'
-            }
-        }
-    }]
-}
-
-});
-</script>
-<!-- Fin gráfica 1-->
-
-<!-- Gráfica2-->
-<script type="text/javascript">
-Highcharts.chart('grafica2', {
-chart: {
-    type: 'pie',
-    zooming: {
-        type: 'xy'
-    },
-    panning: {
-        enabled: true,
-        type: 'xy'
-    },
-    panKey: 'shift'
-},
-title: {
-    text: 'Venta de frutas por mes'
-},
-xAxis: {
-        categories: {{ frutas|safe }}
-    },
-tooltip: {
-    valueSuffix: '%'
-},
-subtitle: {
-    text:
-    'Datos....'
-},
-plotOptions: {
-    pie: {
-        allowPointSelect: true,
-        cursor: 'pointer',
-        dataLabels: [{
-            enabled: true,
-            distance: 20
-        }, {
-            enabled: true,
-            distance: -40,
-            format: '{point.percentage:.1f}%',
-            style: {
-                fontSize: '1.2em',
-                textOutline: 'none',
-                opacity: 0.7
-            },
-            filter: {
-                operator: '>',
-                property: 'percentage',
-                value: 10
-            }
-        }]
-    }
-},
-series: [{
-    name: 'Porcentaje',
-    colorByPoint: true,
-    data: {{ porcentajes|safe }}
-}]
-});
-</script>
-<!-- Fin Gráfica2-->
-
-
-<!-- Gráfica 3-->
-<script type="text/javascript">
-Highcharts.chart('grafica3', {
-    chart: {
-        type: 'column'
-    },
-    title: {
-        text: 'Producción 2023'
-    },
-    subtitle: {
-        text:
-            'Source: <a target="_blank" ' +
-            'href="https://www.indexmundi.com/agriculture/?commodity=corn">indexmundi</a>'
-    },
-    xAxis: {
-        categories: {{ categorias|safe }},
-        crosshair: true,
-        accessibility: {
-            description: 'Paises'
-        }
-    },
-    yAxis: {
-        min: 0,
-        title: {
-            text: 'Producción'
-        }
-    },
-    tooltip: {
-        valueSuffix: 'Producción'
-    },
-    plotOptions: {
-        column: {
-            pointPadding: 0.2,
-            borderWidth: 0
-        }
-    },
-    series: [
-        {
-            name: '2023',
-            data: {{ valores_2023|safe }}
-        },
-        {
-            name: '2024',
-            data: {{ valores_2024|safe }}
-        }
-    ]
-});
-
-</script>
-<!-- Fin Gráfica3-->
-
-<!-- Gráfica 4-->
-<script type="text/javascript">
-
-Highcharts.chart('grafica4', {
-
-    title: {
-        text: 'U.S Solar Employment Growth',
-        align: 'left'
-    },
-
-    subtitle: {
-        text: 'By Job Category. Source: <a href="https://irecusa.org/programs/solar-jobs-census/" target="_blank">IREC</a>.',
-        align: 'left'
-    },
-
-    yAxis: {
-        title: {
-            text: 'Number of Employees'
-        }
-    },
-
-    xAxis: {
-        categories: {{ categorias2|safe }}
-    },
-    
-    series: [{
-        name: 'Installation & Developers',
-        data: {{prueba|safe}}
-    }],
-
+    title: { text: 'Gráfica de X VS Y' },
+    subtitle: { text: 'Origen de los datos: ...' },
+    yAxis: { title: { text: 'Y' } },
+    xAxis: { title: { text: 'X' }, categories: [2, 4, 6, 8, 10] },
+    legend: { layout: 'vertical', align: 'right', verticalAlign: 'middle' },
+    series: [{ name: 'Valores', data: [5, 7, 3, 6, 2] }],
     responsive: {
         rules: [{
-            condition: {
-                maxWidth: 500
-            },
+            condition: { maxWidth: 500 },
             chartOptions: {
-                legend: {
-                    layout: 'horizontal',
-                    align: 'center',
-                    verticalAlign: 'bottom'
-                }
+                legend: { layout: 'horizontal', align: 'center', verticalAlign: 'bottom' }
             }
         }]
     }
-
 });
-
-
+// Gráfica 2
+Highcharts.chart('grafica2', {
+    chart: { type: 'pie', zooming: { type: 'xy' }, panning: { enabled: true, type: 'xy' }, panKey: 'shift' },
+    title: { text: 'Venta de frutas por mes' },
+    tooltip: { valueSuffix: '%' },
+    subtitle: { text: 'Datos....' },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: [{
+                enabled: true,
+                distance: 20
+            }, {
+                enabled: true,
+                distance: -40,
+                format: '{point.percentage:.1f}%',
+                style: { fontSize: '1.2em', textOutline: 'none', opacity: 0.7 },
+                filter: { operator: '>', property: 'percentage', value: 10 }
+            }]
+        }
+    },
+    series: [{
+        name: 'Porcentaje',
+        colorByPoint: true,
+        data: [
+            { name: 'Manzanas', y: 40 },
+            { name: 'Peras', y: 30 },
+            { name: 'Plátanos', y: 20 },
+            { name: 'Uvas', y: 10 }
+        ]
+    }]
+});
+// Gráfica 3
+Highcharts.chart('grafica3', {
+    chart: { type: 'column' },
+    title: { text: 'Producción 2023' },
+    subtitle: { text: 'Source: indexmundi' },
+    xAxis: { categories: ['México', 'Brasil', 'Argentina', 'Chile'], crosshair: true, accessibility: { description: 'Paises' } },
+    yAxis: { min: 0, title: { text: 'Producción' } },
+    tooltip: { valueSuffix: ' Producción' },
+    plotOptions: { column: { pointPadding: 0.2, borderWidth: 0 } },
+    series: [
+        { name: '2023', data: [120, 150, 80, 60] },
+        { name: '2024', data: [130, 140, 90, 70] }
+    ]
+});
+// Gráfica 4
+Highcharts.chart('grafica4', {
+    title: { text: 'U.S Solar Employment Growth', align: 'left' },
+    subtitle: { text: 'By Job Category. Source: IREC.', align: 'left' },
+    yAxis: { title: { text: 'Number of Employees' } },
+    xAxis: { categories: ['2010', '2012', '2014', '2016', '2018', '2020', '2022'] },
+    series: [{
+        name: 'Installation & Developers',
+        data: [50000, 70000, 90000, 120000, 150000, 170000, 200000]
+    }],
+    responsive: {
+        rules: [{
+            condition: { maxWidth: 500 },
+            chartOptions: {
+                legend: { layout: 'horizontal', align: 'center', verticalAlign: 'bottom' }
+            }
+        }]
+    }
+});
 </script>
-<!-- Fin Gráfica4-->
+</body>
+</html>
