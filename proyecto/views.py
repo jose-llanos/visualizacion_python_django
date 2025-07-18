@@ -14,8 +14,23 @@ from proyecto.connection import connection_postgresql
 # -----------------------------------
 
 def main(request):
+    # Se genera la conexión con la base de datos
+    cursor = connection_postgresql()
+
+    # Se consultan los registros para las gráficas
+    cursor.execute(""" select total from compras """)
+    record = cursor.fetchall()
+
+    # Conversión y limpieza
+    datos_y = [float(item[0]) for item in record]
+
+    print(datos_y)
+
+    # Se envian los valores de Y al contexto para renderizar
+    context = {"y": datos_y}
+
     # *** Plantilla ***
-    return render(request, 'index.html', context={})
+    return render(request, 'index.html', context=context)
 
 def grafica1(request):
     # Se genera la conexión con la base de datos
@@ -27,6 +42,8 @@ def grafica1(request):
 
     # Conversión y limpieza
     datos_y = [float(item[0]) for item in record]
+
+    print(datos_y)
 
     # Se envian los valores de Y al contexto para renderizar
     context = {"y": datos_y}

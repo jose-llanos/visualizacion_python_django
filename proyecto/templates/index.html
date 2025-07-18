@@ -22,6 +22,7 @@
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 </head>
 <body>
+{% csrf_token %}
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar -->
@@ -79,7 +80,7 @@
                     <div class="card-metric">
                         <div class="fw-bold fs-4">1,890</div>
                         <div>PRODUCTO VENDIDO</div>
-                        <small class="text-success">↑ 40% El año pasado</small>
+                        <small class="text-success">↑ 40% </small>
                     </div>
                 </div>
             </div>
@@ -217,7 +218,7 @@ Highcharts.chart('grafica1', {
     yAxis: { title: { text: 'Y' } },
     xAxis: { title: { text: 'X' }, categories: [2, 4, 6, 8, 10] },
     legend: { layout: 'vertical', align: 'right', verticalAlign: 'middle' },
-    series: [{ name: 'Valores', data: [5, 7, 3, 6, 2] }],
+    series: [{ name: 'Valores', data: {{y|safe}} }],
     responsive: {
         rules: [{
             condition: { maxWidth: 500 },
