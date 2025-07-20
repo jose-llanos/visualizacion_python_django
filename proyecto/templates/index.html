@@ -213,12 +213,12 @@
 <script type="text/javascript">
 // Gráfica 1
 Highcharts.chart('grafica1', {
-    title: { text: 'Gráfica de X VS Y' },
-    subtitle: { text: 'Origen de los datos: ...' },
-    yAxis: { title: { text: 'Y' } },
-    xAxis: { title: { text: 'X' }, categories: [2, 4, 6, 8, 10] },
+    title: { text: 'Total de Compras' },
+    subtitle: { text: 'Datos...' },
+    yAxis: { title: { text: 'Total Compras' } },
+    xAxis: { title: { text: 'Comprador' }, categories: [2, 4, 6, 8, 10] },
     legend: { layout: 'vertical', align: 'right', verticalAlign: 'middle' },
-    series: [{ name: 'Valores', data: {{y|safe}} }],
+    series: [{ name: 'Compras', data: {{datos_grafica1|safe}} }],
     responsive: {
         rules: [{
             condition: { maxWidth: 500 },
@@ -264,26 +264,26 @@ Highcharts.chart('grafica2', {
 // Gráfica 3
 Highcharts.chart('grafica3', {
     chart: { type: 'column' },
-    title: { text: 'Producción 2023' },
-    subtitle: { text: 'Source: indexmundi' },
-    xAxis: { categories: ['México', 'Brasil', 'Argentina', 'Chile'], crosshair: true, accessibility: { description: 'Paises' } },
-    yAxis: { min: 0, title: { text: 'Producción' } },
-    tooltip: { valueSuffix: ' Producción' },
+    title: { text: 'Compras por cliente' },
+    subtitle: { text: 'Origen de datos...' },
+    xAxis: { categories: {{categorias_grafica3|safe}} },
+    yAxis: { min: 0, title: { text: 'Compras' } },
+    tooltip: { valueSuffix: 'Clientes' },
     plotOptions: { column: { pointPadding: 0.2, borderWidth: 0 } },
-    series: [
-        { name: '2023', data: [120, 150, 80, 60] },
-        { name: '2024', data: [130, 140, 90, 70] }
-    ]
+    series: [{
+        name: 'Ventas por cliente',
+        data: {{datos_grafica3|safe}}
+    }]
 });
 // Gráfica 4
 Highcharts.chart('grafica4', {
-    title: { text: 'U.S Solar Employment Growth', align: 'left' },
-    subtitle: { text: 'By Job Category. Source: IREC.', align: 'left' },
-    yAxis: { title: { text: 'Number of Employees' } },
-    xAxis: { categories: ['2010', '2012', '2014', '2016', '2018', '2020', '2022'] },
+    title: { text: 'Clientes por Zona', align: 'left' },
+    subtitle: { text: 'Origen de datos....', align: 'left' },
+    yAxis: { title: { text: 'Número de la Zona' } },
+    xAxis: { categories: {{categorias_grafica4| safe}} },
     series: [{
-        name: 'Installation & Developers',
-        data: [50000, 70000, 90000, 120000, 150000, 170000, 200000]
+        name: 'Cliente por Zona',
+        data: {{datos_grafica4|safe}}
     }],
     responsive: {
         rules: [{

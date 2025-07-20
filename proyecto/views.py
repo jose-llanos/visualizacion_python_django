@@ -17,17 +17,41 @@ def main(request):
     # Se genera la conexión con la base de datos
     cursor = connection_postgresql()
 
-    # Se consultan los registros para las gráficas
-    cursor.execute(""" select total from compras """)
+    # Consulta para Gráfica 1
+    cursor.execute(""" SELECT total FROM compras """)
     record = cursor.fetchall()
 
-    # Conversión y limpieza
-    datos_y = [float(item[0]) for item in record]
+    # Datos Gráfica 1
+    datos_grafica1 = [float(item[0]) for item in record]
+    #-----------------------------------------------------------
 
-    print(datos_y)
+    # Consulta para Gráfica 3
+    cursor.execute(""" SELECT CL.nombres, C.total 
+                       FROM compras AS C, clientes AS CL
+                       WHERE C.id_cliente = CL.id_cliente """)
+    record = cursor.fetchall()
 
-    # Se envian los valores de Y al contexto para renderizar
-    context = {"y": datos_y}
+    # Datos Gráfica 3
+    categorias_grafica3 = [item[0] for item in record]
+    datos_grafica3 = [float(item[1]) for item in record]
+    #-----------------------------------------------------------
+
+    # Consulta para Gráfica 4
+    cursor.execute(""" SELECT ciudad, id_ciudad 
+                       FROM ciudades """)
+    record = cursor.fetchall()
+
+    # Datos Gráfica 4
+    categorias_grafica4 = [item[0] for item in record]
+    datos_grafica4 = [float(item[1]) for item in record]
+   
+    # Se envian los valores al contexto de todas las gráficas para renderizar
+    context = {
+                "datos_grafica1": datos_grafica1,
+                "categorias_grafica3": categorias_grafica3,
+                "datos_grafica3": datos_grafica3,
+                "categorias_grafica4": categorias_grafica4,
+                "datos_grafica4": datos_grafica4}
 
     # *** Plantilla ***
     return render(request, 'index.html', context=context)
